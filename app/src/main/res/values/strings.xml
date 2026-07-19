@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">جستجوی هوشمند دیوار</string>
+    <string name="new_listing_notification_channel_id">new_listing_channel</string>
+    <string name="new_listing_notification_channel_name">آگهی‌های جدید</string>
+    <string name="new_listing_notification_channel_desc">اعلان زمانی که آگهی جدیدی مطابق فیلترهای شما پیدا شود</string>
+    <!-- Bug fix: renamed from "background_scan_channel" to "background_scan_channel_v2".
+         Android never lets an app change an existing notification channel's
+         importance from code once that channel has been created on the
+         device -- only the person can, from system Settings. Devices that
+         already had this app installed before the IMPORTANCE_MIN -> LOW fix
+         (see DivarApplication.createNotificationChannel) would otherwise
+         keep using their old, already-created, permanently-invisible
+         channel forever. A new id forces a brand-new channel to be created
+         with the corrected (visible) importance. -->
+    <string name="background_scan_channel_id">background_scan_channel_v2</string>
+    <string name="background_scan_channel_name">جستجوی خودکار در پس‌زمینه</string>
+    <string name="background_scan_channel_desc">نمایش وضعیت اسکن خودکار جستجوهای شما در پس‌زمینه</string>
+    <string name="background_scan_notification_title">در حال رصد جستجوهای شما</string>
+    <string name="background_scan_notification_text">به محض پیدا شدن آگهی مالک جدید به شما اطلاع می‌دهیم</string>
+
+    <!-- Navigation / bottom bar -->
+    <string name="nav_new_search">جستجوی جدید</string>
+    <string name="nav_searches">جستجوها</string>
+    <string name="nav_results">نتایج</string>
+    <string name="nav_history">تاریخچه</string>
+    <string name="nav_settings">تنظیمات</string>
+
+    <!-- Home / new search form -->
+    <string name="home_title">فیلترهای جستجوی جدید</string>
+    <string name="field_search_name">نام جستجو</string>
+    <string name="field_search_url">لینک جستجوی دیوار</string>
+    <string name="field_min_price">حداقل قیمت (تومان)</string>
+    <string name="field_max_price">حداکثر قیمت (تومان)</string>
+    <string name="field_min_area">حداقل متراژ (متر)</string>
+    <string name="field_max_area">حداکثر متراژ (متر)</string>
+    <string name="field_max_price_per_meter">حداکثر قیمت هر متر مربع</string>
+    <string name="field_city">شهر</string>
+    <string name="field_neighborhood">محله</string>
+    <string name="field_property_type">نوع ملک</string>
+    <string name="field_owners_only">فقط آگهی‌های مالک</string>
+    <string name="field_max_age_hours">حداکثر سن آگهی (ساعت)</string>
+    <string name="action_save_search">ذخیره جستجو</string>
+
+    <!-- Property types -->
+    <string name="property_type_apartment">آپارتمان</string>
+    <string name="property_type_villa">ویلایی</string>
+    <string name="property_type_land">زمین و کلنگی</string>
+    <string name="property_type_office">اداری</string>
+    <string name="property_type_shop">مغازه و تجاری</string>
+    <string name="property_type_other">سایر</string>
+
+    <!-- Search management -->
+    <string name="searches_title">جستجوهای من</string>
+    <string name="searches_empty">هنوز جستجویی نساخته‌اید</string>
+    <string name="action_edit">ویرایش</string>
+    <string name="action_delete">حذف</string>
+    <string name="confirm_delete_search_title">حذف جستجو</string>
+    <string name="confirm_delete_search_message">آیا از حذف این جستجو مطمئن هستید؟</string>
+    <string name="action_confirm">تأیید</string>
+    <string name="action_cancel">انصراف</string>
+
+    <!-- Permanent filters -->
+    <string name="permanent_filters_title">فیلترهای دائمی</string>
+    <string name="permanent_filters_subtitle">شماره‌هایی که هرگز آگهی‌شان نمایش داده نشود</string>
+    <string name="field_phone_number">شماره تلفن</string>
+    <string name="field_phone_note">یادداشت (اختیاری)</string>
+    <string name="action_add_phone">افزودن به لیست</string>
+    <string name="permanent_filters_empty">هیچ شماره‌ای مسدود نشده است</string>
+
+    <!-- Results -->
+    <string name="results_title">نتایج</string>
+    <string name="results_empty">هنوز آگهی‌ای مطابق فیلترها پیدا نشده</string>
+    <string name="action_open_ad">مشاهده آگهی</string>
+    <string name="action_save_listing">ذخیره</string>
+    <string name="action_reject_listing">رد کردن</string>
+    <string name="label_price_per_meter">قیمت هر متر</string>
+
+    <!-- History -->
+    <string name="history_title">تاریخچه</string>
+    <string name="history_tab_seen">مشاهده‌شده</string>
+    <string name="history_tab_saved">ذخیره‌شده</string>
+    <string name="history_tab_rejected">ردشده</string>
+
+    <!-- Settings -->
+    <string name="settings_title">تنظیمات</string>
+    <string name="setting_dark_mode">حالت شب</string>
+    <string name="setting_notification_sound">صدای اعلان</string>
+    <string name="setting_notifications_enabled">اعلان‌ها فعال باشند</string>
+
+    <!-- Generic -->
+    <string name="error_generic">خطایی رخ داد. لطفاً دوباره تلاش کنید.</string>
+    <string name="error_network">اتصال برقرار نشد. اتصال اینترنت را بررسی کنید.</string>
+    <string name="loading">در حال بارگذاری…</string>
+    <string name="retry">تلاش مجدد</string>
+</resources>

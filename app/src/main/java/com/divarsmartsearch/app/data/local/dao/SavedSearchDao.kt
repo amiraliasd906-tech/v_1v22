@@ -1,0 +1,33 @@
+package com.divarsmartsearch.app.data.local.dao
+
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
+import com.divarsmartsearch.app.data.local.entity.SavedSearchEntity
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface SavedSearchDao {
+    @Query("SELECT * FROM saved_searches ORDER BY createdAt DESC")
+    fun observeAll(): Flow<List<SavedSearchEntity>>
+
+    @Query("SELECT * FROM saved_searches ORDER BY createdAt DESC")
+    suspend fun getAll(): List<SavedSearchEntity>
+
+    @Query("SELECT * FROM saved_searches WHERE id = :id")
+    suspend fun getById(id: Long): SavedSearchEntity?
+
+    @Insert
+    suspend fun insert(entity: SavedSearchEntity): Long
+
+    @Update
+    suspend fun update(entity: SavedSearchEntity)
+
+    @Delete
+    suspend fun delete(entity: SavedSearchEntity)
+
+    @Query("DELETE FROM saved_searches WHERE id = :id")
+    suspend fun deleteById(id: Long)
+}
