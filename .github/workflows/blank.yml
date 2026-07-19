@@ -1,0 +1,73 @@
+name: Build APK
+
+on:
+  push:
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.7"
+
+      # gradlew / gradlew.bat and gradle/wrapper/gradle-wrapper.properties
+      # are committed to the repo, but the binary gradle-wrapper.jar can't
+      # be hand-written, so it's regenerated here from the real Gradle
+      # installed just above (the same `gradle wrapper` task Android
+      # Studio itself runs). This step is a no-op once the jar already
+      # exists in the repo.
+      - name: Ensure Gradle Wrapper jar exists
+        run: |
+          if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
+            gradle wrapper --gradle-version 8.7 --distribution-type bin
+          fi
+          chmod +x gradlew
+
+      # First run on a normal push: commit the freshly generated wrapper
+      # jar back to the repo so future runs (and anyone who clones the
+      # project into Android Studio) have it already, instead of
+      # regenerating it on every single build.
+      - name: Commit Gradle Wrapper jar if newly generated
+        if: github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/')
+        run: |
+          if [ -n "$(git status --porcelain gradle/wrapper/gradle-wrapper.jar)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add gradle/wrapper/gradle-wrapper.jar
+            git commit -m "chore: add Gradle Wrapper jar [skip ci]"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DivarSmartSearch-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
+      # اگر کد روی یک تگ نسخه (مثل v1.0.0) پوش شود، علاوه بر APK دیباگ بالا،
+      # یک Release رسمی هم در گیت‌هاب ساخته می‌شود.
+      - name: Create GitHub Release (only on version tags)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: app/build/outputs/apk/debug/*.apk
+          generate_release_notes: true
